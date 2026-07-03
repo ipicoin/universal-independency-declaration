@@ -62,12 +62,13 @@ parametry techniczne poniżej są jedynie jej implementacją.
 
 | Parametr | Wartość (propozycja) | Uwagi |
 |---|---|---|
-| Chain ID (mainnet) | `ipi-mainnet-1` | inkrementowany przy upgrade wymagającym hard-forku |
+| Chain ID (mainnet) | `ipi-mainnet-2` | inkrementowany przy upgrade wymagającym hard-forku |
 | Chain ID (testnet) | `ipi-testnet-1` | publiczny devnet/testnet — Fala 1 |
 | Bech32 prefix (account) | `ipi` | walidator: `ipivaloper`, konsensus: `ipivalcons` |
 | SLIP-0044 coin type | `118` | wspólny dla ekosystemu Cosmos (interop, Ledger, walletty) |
-| Denom bazowy | `uipi` | 1 IPI = 1 000 000 uipi |
-| Denom display | `IPI` | 6 miejsc po przecinku (`exponent = 6`) |
+| RPC / REST endpoint | `https://ipicoin.eu/rpc` / `https://ipicoin.eu/api` | wg `chainconfig` (SSOT) |
+| Denom bazowy | `nipi` | 1 IPI = 1 000 000 000 nipi |
+| Denom display | `IPI` | 9 miejsc po przecinku (`exponent = 9`) |
 | Docelowy czas bloku | ~6 s | Tendermint/CometBFT BFT |
 | Silnik konsensusu | CometBFT (Tendermint BFT) | via Cosmos SDK |
 | Środowisko kontraktów | CosmWasm (WASM) | zgodnie z `cw-template`, `minimal-gas-meter` |
@@ -87,12 +88,12 @@ opisuje intencję, `chainconfig` dostarcza maszynowo-czytelnej konfiguracji.
 > (supply, procenty alokacji, stopy inflacji) wymagają osobnej uchwały
 > governance i mogą ulec zmianie przed genesis.
 
-**Token natywny:** IPI (`uipi`, 6 miejsc). Pełni trzy funkcje: opłaty (gas),
+**Token natywny:** IPI (`nipi`, 9 miejsc). Pełni trzy funkcje: opłaty (gas),
 staking/zabezpieczenie konsensusu oraz prawo głosu w governance.
 
 ### 3.1 Podaż początkowa (propozycja)
 
-- **Initial supply:** propozycja **1 000 000 000 IPI** (`1e15 uipi`) w bloku
+- **Initial supply:** propozycja **1 000 000 000 IPI** (`1e18 nipi`) w bloku
   genesis. Wartość do zatwierdzenia przez DAO.
 - Podaż nie jest sztywno ograniczona — rośnie zgodnie z modelem inflacji
   stakingowej (poniżej), z jednoczesnym spalaniem części opłat (do decyzji DAO).
@@ -114,7 +115,7 @@ przekracza cel — maleje.
 
 - **Community tax:** propozycja **2%** nagród kierowanych do community pool
   (finansowanie rozwoju federacji przez governance).
-- **Opłaty (gas):** płacone w `uipi`; część może być spalana (deflacyjny
+- **Opłaty (gas):** płacone w `nipi`; część może być spalana (deflacyjny
   bufor) — udział do decyzji DAO.
 
 ### 3.4 Dystrybucja podaży początkowej (PROPOZYCJA — do decyzji DAO)

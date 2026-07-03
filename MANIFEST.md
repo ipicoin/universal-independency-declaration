@@ -11,12 +11,14 @@
 | Klucz | Wartość (propozycja) |
 |---|---|
 | `network_name` | Independent Protocol Infrastructure (IPI) |
-| `chain_id_mainnet` | `ipi-mainnet-1` |
+| `chain_id_mainnet` | `ipi-mainnet-2` |
 | `chain_id_testnet` | `ipi-testnet-1` |
 | `consensus` | CometBFT (Tendermint BFT) |
 | `sdk` | Cosmos SDK |
 | `smart_contracts` | CosmWasm (WASM) |
 | `target_block_time` | `~6s` |
+| `rpc_endpoint` | `https://ipicoin.eu/rpc` |
+| `rest_endpoint` | `https://ipicoin.eu/api` |
 
 ## Adresacja i denominacja
 
@@ -26,16 +28,16 @@
 | `bech32_prefix_validator` | `ipivaloper` |
 | `bech32_prefix_consensus` | `ipivalcons` |
 | `slip44_coin_type` | `118` |
-| `base_denom` | `uipi` |
+| `base_denom` | `nipi` |
 | `display_denom` | `IPI` |
-| `denom_exponent` | `6` |
-| `conversion` | `1 IPI = 1_000_000 uipi` |
+| `denom_exponent` | `9` |
+| `conversion` | `1 IPI = 1_000_000_000 nipi` |
 
 ## Tokenomika (propozycja — decyzja DAO wymagana)
 
 | Klucz | Wartość (propozycja) |
 |---|---|
-| `initial_supply` | `1_000_000_000 IPI` (`1e15 uipi`) |
+| `initial_supply` | `1_000_000_000 IPI` (`1e18 nipi`) |
 | `inflation_min` | `0.07` |
 | `inflation_max` | `0.20` |
 | `goal_bonded` | `0.67` |
