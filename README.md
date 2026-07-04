@@ -67,8 +67,9 @@ parametry techniczne poniżej są jedynie jej implementacją.
 | Bech32 prefix (account) | `ipi` | walidator: `ipivaloper`, konsensus: `ipivalcons` |
 | SLIP-0044 coin type | `118` | wspólny dla ekosystemu Cosmos (interop, Ledger, walletty) |
 | RPC / REST endpoint | `https://ipicoin.eu/rpc` / `https://ipicoin.eu/api` | wg `chainconfig` (SSOT) |
-| Denom bazowy | `nipi` | 1 IPI = 1 000 000 000 nipi |
-| Denom display | `IPI` | 9 miejsc po przecinku (`exponent = 9`) |
+| Denom bazowy | `nipi` | jednostka bazowa on-chain (exponent 0); 1 IPI = 1 000 000 000 nipi |
+| Denom display | `ipi` | jednostka display on-chain (lowercase), `exponent = 9` |
+| Symbol / ticker | `IPI` | kanoniczny symbol (uppercase) wyświetlany użytkownikowi |
 | Docelowy czas bloku | ~6 s | Tendermint/CometBFT BFT |
 | Silnik konsensusu | CometBFT (Tendermint BFT) | via Cosmos SDK |
 | Środowisko kontraktów | CosmWasm (WASM) | zgodnie z `cw-template`, `minimal-gas-meter` |
@@ -88,8 +89,10 @@ opisuje intencję, `chainconfig` dostarcza maszynowo-czytelnej konfiguracji.
 > (supply, procenty alokacji, stopy inflacji) wymagają osobnej uchwały
 > governance i mogą ulec zmianie przed genesis.
 
-**Token natywny:** IPI (`nipi`, 9 miejsc). Pełni trzy funkcje: opłaty (gas),
-staking/zabezpieczenie konsensusu oraz prawo głosu w governance.
+**Token natywny:** symbol **IPI** (uppercase, kanon). Jednostka bazowa on-chain
+`nipi` (exponent 0), jednostka display on-chain `ipi` (exponent 9). Pełni trzy
+funkcje: opłaty (gas), staking/zabezpieczenie konsensusu oraz prawo głosu w
+governance.
 
 ### 3.1 Podaż początkowa (propozycja)
 
@@ -120,13 +123,23 @@ przekracza cel — maleje.
 
 ### 3.4 Dystrybucja podaży początkowej (PROPOZYCJA — do decyzji DAO)
 
+> **Nagrody stakingowe pochodzą wyłącznie z inflacji** (moduł `x/mint`, §3.2):
+> `x/mint` mintuje **nowe** tokeny ponad bieżącą podaż i kieruje je do puli
+> nagród walidatorów/delegatorów w każdym bloku. Dlatego **nie ma osobnej
+> „rezerwy stakingowej" w genesis** — utrzymywanie 20% podaży początkowej jako
+> rezerwy nagród oznaczałoby **podwójne zaprowiantowanie** (rewards raz z
+> genesis, raz z emisji inflacyjnej). Zwolnione 20% realokujemy do pozostałych
+> pul; nowy podział sumuje się do 100%. **To propozycja DRAFT do decyzji DAO.**
+
 | Pula | Udział (propozycja) | Vesting / uwagi |
 |---|---|---|
-| Federacja / organizacje członkowskie | 30% | dystrybucja wg wejścia do federacji |
-| Community pool / skarb DAO | 25% | zarządzane on-chain przez governance |
-| Nagrody stakingowe (rezerwa startowa) | 20% | uwalniane przez emisję inflacyjną |
-| Zespół rdzeniowy i wcześni kontrybutorzy | 15% | vesting liniowy, np. 4 lata / 1 rok cliff |
-| Ekosystem, granty, incentywy | 10% | programy rozwojowe, faucet testnet |
+| Federacja / organizacje członkowskie | 35% | dystrybucja wg wejścia do federacji |
+| Community pool / skarb DAO | 30% | zarządzane on-chain przez governance |
+| Zespół rdzeniowy i wcześni kontrybutorzy | 18% | vesting liniowy, np. 4 lata / 1 rok cliff |
+| Ekosystem, granty, incentywy | 17% | programy rozwojowe, faucet testnet |
+
+**Suma: 100%** (35 + 30 + 18 + 17). Bezpieczeństwo stakingu finansuje wyłącznie
+emisja inflacyjna z §3.2 — nie genesis.
 
 > Powyższe **procenty są jedynie propozycją wyjściową**. Ostateczna alokacja,
 > harmonogramy vestingu i ewentualny hard cap wymagają uchwały DAO przed genesis.
@@ -178,8 +191,16 @@ podmiotami, pozostawiając im wewnętrzną suwerenność.
 - **Propozycje:** składane on-chain, z okresem depozytu i okresem głosowania.
 - **Głosowanie:** ważone stakiem (`Yes` / `No` / `NoWithVeto` / `Abstain`),
   wzorzec modułu `x/gov` Cosmos SDK.
-- **Egzekucja:** przyjęte propozycje wykonywane automatycznie (zmiany
-  parametrów, wydatki z community pool, upgrade'y, przyjęcia organizacji).
+- **Egzekucja — dwa typy propozycji (`x/gov`):**
+  - *Propozycje wykonywalne* (z executable messages) — np. zmiana parametrów
+    (`MsgUpdateParams`), wydatek z community pool (`MsgCommunityPoolSpend`),
+    software upgrade: po przyjęciu **wykonują się automatycznie on-chain** (na
+    koniec okresu głosowania).
+  - *Propozycje tekstowe / sygnalizacyjne* — np. **przyjęcie organizacji do
+    federacji**: `x/gov` **nie przewiduje dla nich on-chain execution**.
+    Przegłosowanie jest wiążącym sygnałem DAO, a właściwe wdrożenie następuje
+    **off-chain / manualnie** (onboarding operacyjny wg §4.1: rejestracja
+    tożsamości, podłączenie do `hq-spacecraft`).
 - **Odwracalność:** każda decyzja może zostać zmieniona wyłącznie kolejną
   decyzją DAO — brak uprzywilejowanego pojedynczego administratora.
 

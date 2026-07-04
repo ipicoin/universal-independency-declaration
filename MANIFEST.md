@@ -28,8 +28,9 @@
 | `bech32_prefix_validator` | `ipivaloper` |
 | `bech32_prefix_consensus` | `ipivalcons` |
 | `slip44_coin_type` | `118` |
-| `base_denom` | `nipi` |
-| `display_denom` | `IPI` |
+| `base_denom` | `nipi` (jednostka bazowa on-chain, exponent 0) |
+| `display_denom` | `ipi` (jednostka display on-chain, lowercase, exponent 9) |
+| `symbol` / `ticker` | `IPI` (kanon, uppercase — symbol wyświetlany użytkownikowi) |
 | `denom_exponent` | `9` |
 | `conversion` | `1 IPI = 1_000_000_000 nipi` |
 
@@ -44,15 +45,18 @@
 | `inflation_rate_change` | `0.13` |
 | `community_tax` | `0.02` |
 
-### Dystrybucja podaży początkowej (propozycja)
+### Dystrybucja podaży początkowej (propozycja — do decyzji DAO)
+
+> **DRAFT.** Nagrody stakingowe pochodzą **wyłącznie z inflacji** (`x/mint`) —
+> brak osobnej puli „rezerwy stakingowej" w genesis (unika podwójnego
+> zaprowiantowania). Zwolnione 20% realokowane do pozostałych pul; suma = 100%.
 
 | Pula | Udział |
 |---|---|
-| Federacja / organizacje członkowskie | 30% |
-| Community pool / skarb DAO | 25% |
-| Nagrody stakingowe (rezerwa startowa) | 20% |
-| Zespół rdzeniowy i wcześni kontrybutorzy | 15% |
-| Ekosystem / granty / incentywy | 10% |
+| Federacja / organizacje członkowskie | 35% |
+| Community pool / skarb DAO | 30% |
+| Zespół rdzeniowy i wcześni kontrybutorzy | 18% |
+| Ekosystem / granty / incentywy | 17% |
 
 ## Governance
 
@@ -61,7 +65,8 @@
 | `gov_module` | Cosmos SDK `x/gov` |
 | `vote_options` | `Yes` / `No` / `NoWithVeto` / `Abstain` |
 | `voting_power` | staking-weighted |
-| `execution` | automatyczna po przyjęciu propozycji |
+| `execution_executable` | propozycje z executable messages (zmiana parametrów, wydatek z community pool, upgrade) — **auto-exec on-chain** po przyjęciu |
+| `execution_text` | propozycje tekstowe/sygnalizacyjne (np. przyjęcie organizacji) — **brak on-chain execution**, wdrożenie off-chain/manualne |
 | `reversibility` | wyłącznie kolejną decyzją DAO |
 
 ## Tożsamość i federacja
