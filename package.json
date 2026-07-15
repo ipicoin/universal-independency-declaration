@@ -1,7 +1,7 @@
 {
   "name": "universal-independency-declaration",
   "version": "1.0.0",
-  "description": "universal independency declaration is usefull manifest setup code collection, library of most important tools for be free for individuals and independent for groups with shared and respected borders of each others priviliges",
+  "description": "Incubating multi-language research workspace for reproducible independence checks.",
   "keywords": [
     "ipi",
     "dao",
@@ -16,7 +16,7 @@
     "type": "git",
     "url": "git+https://github.com/ipicoin/universal-independency-declaration.git"
   },
-  "license": "CC-BY-ND-4.0",
+  "license": "Apache-2.0",
   "authors": [],
   "type": "module",
   "main": "index.js",
