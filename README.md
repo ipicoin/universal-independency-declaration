@@ -1,7 +1,7 @@
 # Universal Independency Declaration
 
-An incubating, multi-language research workspace for expressing and testing
-portable independence checks.
+A multi-language research workspace for expressing and testing portable
+independence checks.
 
 > **Status: concept skeleton.** The JavaScript, Python, Go, and Rust entry
 > points are placeholders. This repository does not yet define a stable API,
